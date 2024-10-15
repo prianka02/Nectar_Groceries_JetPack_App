@@ -42,10 +42,20 @@ import androidx.navigation.compose.rememberNavController
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.auth.MobileNumberScreen
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
+import androidx.compose.runtime.LaunchedEffect
+
 
 @Composable
 fun GetOTPView(){
+
+    var otpText by remember { mutableStateOf("") }
+
     val focusRequester = remember { FocusRequester() }
+
+    // Automatically request focus when the screen loads
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     Box(
         modifier = Modifier
@@ -72,10 +82,6 @@ fun GetOTPView(){
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.nectar_gray_text_color)
             )
-
-            var otpText by remember {
-                mutableStateOf("")
-            }
 
 //          OTP View Text Field
             BasicTextField(
@@ -131,45 +137,9 @@ fun GetOTPView(){
                 }
             }
 
-            // Phone number input
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(top = 10.dp)
-//            ) {
-//
-//                // BasicTextField for mobile input
-//                BasicTextField(
-//                    value = "Value", // Use the passed text value
-//                    maxLines = 1,
-//                    minLines = 1,
-//                    onValueChange = {
-////                        newText ->
-////                        if (newText.text.length <= maxLength) {
-////                            onTextChanged(newText) // Only update the text if it's within the limit
-////                        }
-//                    },
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .focusRequester(focusRequester),
-//                    textStyle = TextStyle(color = Color.Black),
-//                    keyboardOptions = KeyboardOptions.Default.copy(
-//                        keyboardType = KeyboardType.Phone,
-//                        imeAction = ImeAction.Search // Specify "Done" action
-//                    ),
-//
-//                    keyboardActions = KeyboardActions(onDone = {
-//                        focusRequester.freeFocus() // Optionally clear focus
-//
-//                    })
-//                )
-//            }
-
             Spacer(modifier = Modifier.height(20.dp))
 
             HorizontalDividerComponent()
-
         }
     }
 }

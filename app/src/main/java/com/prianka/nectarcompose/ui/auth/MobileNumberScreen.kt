@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,10 +28,12 @@ import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 @Composable
 fun MobileNumberScreen(navController: NavController) {
+    // a variable for a context
+    val ctx = LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        var text by remember { mutableStateOf(TextFieldValue("+880")) } // Manage the text state
+        var mobileNoText by remember { mutableStateOf(TextFieldValue("+880")) } // Manage the text state
 
 //Get the Reusable TopBackground Component
         AuthTopBackground()
@@ -39,9 +42,9 @@ fun MobileNumberScreen(navController: NavController) {
 
 // Get the Reusable Mobile Number Component
         GetMobileNumberView(
-            text = text, // Pass the current text to TopBackgroundImageSet
+            text = mobileNoText, // Pass the current text to TopBackgroundImageSet
             onTextChanged = { newText ->
-                text = newText // Update the state with the new text
+                mobileNoText = newText // Update the state with the new text
 
             }
         )
@@ -57,15 +60,22 @@ fun MobileNumberScreen(navController: NavController) {
             CircularArrowButton(
                 onClick = {
                     // Handle the click event, e.g., navigate to another screen
-                    if (text.text.isNotEmpty() && text.text.length != 14)  {
-                        Toast.makeText(
-                            navController.context,
-                            "Please enter a valid mobile number",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    else{
-                        navController.navigate(Screen.OTPVerificationScreen.route)
+                    when {
+                        mobileNoText.text.isEmpty() || mobileNoText.text.length != 14 -> {
+
+                            Toast.makeText(
+                                navController.context,
+                                "Please enter a valid mobile number",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        android.util.Patterns.PHONE.matcher(mobileNoText.text).matches() -> {
+
+                            navController.navigate(Screen.OTPVerificationScreen.route)
+                        }
+                        else -> {
+                            Toast.makeText(ctx, "Phone Number is invalid.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             )

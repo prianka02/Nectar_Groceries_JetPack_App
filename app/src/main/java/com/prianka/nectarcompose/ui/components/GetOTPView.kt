@@ -40,8 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.prianka.nectarcompose.R
-import com.prianka.nectarcompose.ui.auth.MobileNumberScreen
-import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalFocusManager
 

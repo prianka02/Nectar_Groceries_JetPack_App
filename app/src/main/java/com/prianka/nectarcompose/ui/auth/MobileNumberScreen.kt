@@ -20,7 +20,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.prianka.nectarcompose.ui.components.AuthTopBackground
 import com.prianka.nectarcompose.ui.components.CircularArrowButton
 import com.prianka.nectarcompose.ui.components.GetMobileNumberView

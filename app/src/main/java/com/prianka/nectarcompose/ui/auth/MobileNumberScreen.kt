@@ -42,7 +42,7 @@ fun MobileNumberScreen(navController: NavController) {
 
 // Get the Reusable Mobile Number Component
         GetMobileNumberView(
-            text = mobileNoText, // Pass the current text to TopBackgroundImageSet
+            phoneNoText = mobileNoText, // Pass the current text to TopBackgroundImageSet
             onTextChanged = { newText ->
                 mobileNoText = newText // Update the state with the new text
 
@@ -72,6 +72,7 @@ fun MobileNumberScreen(navController: NavController) {
                         android.util.Patterns.PHONE.matcher(mobileNoText.text).matches() -> {
 
                             navController.navigate(Screen.OTPVerificationScreen.route)
+
                         }
                         else -> {
                             Toast.makeText(ctx, "Phone Number is invalid.", Toast.LENGTH_SHORT).show()
@@ -80,16 +81,15 @@ fun MobileNumberScreen(navController: NavController) {
                 }
             )
         }
-
     }
 }
 
 
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun MobileNumberScreenPreview() {
-    NectarComposeTheme {
-        MobileNumberScreen(navController = rememberNavController())
-    }
-}
+//
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun MobileNumberScreenPreview() {
+//    NectarComposeTheme {
+//        MobileNumberScreen(navController = rememberNavController())
+//    }
+//}

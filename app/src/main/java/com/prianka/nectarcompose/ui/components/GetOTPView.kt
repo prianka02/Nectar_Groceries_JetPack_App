@@ -43,14 +43,16 @@ import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.auth.MobileNumberScreen
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalFocusManager
 
 
 @Composable
 fun GetOTPView(){
 
-    var otpText by remember { mutableStateOf("") }
+    var otpCode by remember { mutableStateOf("") }
 
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current  // Request for inputText Focusing and Hiding as well as keyboard manager
 
     // Automatically request focus when the screen loads
     LaunchedEffect(Unit) {
@@ -85,11 +87,11 @@ fun GetOTPView(){
 
 //          OTP View Text Field
             BasicTextField(
-                value = otpText,
+                value = otpCode,
                 maxLines = 1,
                 onValueChange = {
                     if(it.length <= 4){
-                        otpText = it
+                        otpCode = it
                     }
                 },
                 modifier = Modifier
@@ -98,11 +100,11 @@ fun GetOTPView(){
 
                 keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Search // Specify "Done" action
+                        imeAction = ImeAction.Done // Specify "Done" action
                     ),
 
                 keyboardActions = KeyboardActions(onDone = {
-                        focusRequester.freeFocus() // Optionally clear focus
+                        focusManager.clearFocus() // Optionally clear focus
                     })
 
             ){
@@ -111,8 +113,8 @@ fun GetOTPView(){
                 ){
                     repeat(4){ index ->
                         val number = when{
-                            index >= otpText.length -> ""
-                            else -> otpText[index]
+                            index >= otpCode.length -> ""
+                            else -> otpCode[index]
                         }
 
                         Column(
@@ -144,10 +146,10 @@ fun GetOTPView(){
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GetOTPViewPreview() {
-    NectarComposeTheme {
-        GetOTPView()
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun GetOTPViewPreview() {
+//    NectarComposeTheme {
+//        GetOTPView()
+//    }
+//}

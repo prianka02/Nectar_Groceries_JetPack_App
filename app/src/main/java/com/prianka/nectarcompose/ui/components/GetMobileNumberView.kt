@@ -24,6 +24,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -40,11 +42,12 @@ import com.prianka.nectarcompose.R
 
 @Composable
 fun GetMobileNumberView(
-    text: TextFieldValue, // Accept the text as a parameter
+    phoneNoText: TextFieldValue, // Accept the text as a parameter
     onTextChanged: (TextFieldValue) -> Unit,
     maxLength: Int = 14
 ) {
-    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current  // Request for inputText Focusing and Hiding as well as keyboard manager
+
 
     Box(
         modifier = Modifier
@@ -89,31 +92,30 @@ fun GetMobileNumberView(
 
                 // BasicTextField for mobile input
                 BasicTextField(
-                    value = text, // Use the passed text value
+                    value = phoneNoText, // Use the passed text value
                     maxLines = 1,
                     minLines = 1,
-                    onValueChange = { newText ->
-                        if (newText.text.length <= maxLength) {
-                            onTextChanged(newText) // Only update the text if it's within the limit
+                    onValueChange = { newPhoneNoText ->
+                        if (newPhoneNoText.text.length <= maxLength) {
+                            onTextChanged(newPhoneNoText) // Only update the text if it's within the limit
                         }
                                     },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
+                        .fillMaxWidth(),
                     textStyle = TextStyle(color = Color.Black),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Search // Specify "Done" action
+                        imeAction = ImeAction.Done // Specify "Done" action
                     ),
 
-                    keyboardActions = KeyboardActions(onDone = {
-                        focusRequester.freeFocus() // Optionally clear focus
-
-                    })
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }
+                    )
 
                 )
             }
-
             Spacer(modifier = Modifier.height(10.dp))
 
             HorizontalDividerComponent()

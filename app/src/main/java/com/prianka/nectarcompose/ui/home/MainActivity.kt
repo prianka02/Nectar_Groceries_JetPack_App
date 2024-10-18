@@ -43,6 +43,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.auth.VerificationActivity
+import com.prianka.nectarcompose.ui.components.NectarDesignerButton
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -108,6 +109,7 @@ fun SplashScreen(navController: NavController){
 @Composable
 fun OnBoardingScreen() {
     val context = LocalContext.current // Get the current context
+
     // Create a launcher for starting the activity
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -162,27 +164,14 @@ fun OnBoardingScreen() {
                           .padding(bottom = 30.dp)
                   )
                   // Get Started Button
-                  Button(
+                  NectarDesignerButton(
+                      text = "Get Started",
                       onClick = {
-                          // Create an intent to start the activity
                           val intent = Intent(context, VerificationActivity::class.java)
-                          // Start the activity using the launcher
                           launcher.launch(intent)
-
-                          // Finish the current activity
                           (context as? Activity)?.finish()
-
-                      },
-                      colors = ButtonDefaults.buttonColors(
-                          containerColor = Color(0xFF53B175)
-                      ),
-                      shape = RoundedCornerShape(19.dp),
-                      modifier = Modifier
-                          .fillMaxWidth(0.8f) // Make the button 80% of the width
-                          .height(67.dp)
-                  ) {
-                      Text(text = "Get Started", color = Color.White, fontSize = 16.sp)
-                  }
+                      }
+                  )
               }
           }
       }

@@ -33,6 +33,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -105,19 +106,13 @@ fun SignInScreen(navController: NavController){
                         onValueChange = { newText -> text = newText },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .focusRequester(focusRequester)
                             .onFocusChanged { focusState ->
                                 if (focusState.isFocused && !isFocused) {
                                     isFocused = true
-                                    // Navigate to another screen when focused
-                                    navController.navigate(Screen.MobileNumberScreen.route)
+                                    navController.navigate(Screen.MobileNumberScreen.route) // Navigate to another screen when focused
                                 }
                             },
                         textStyle = TextStyle(color = Color.Black),
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = {
-                            focusRequester.freeFocus() // Optionally clear focus
-                        })
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                 }

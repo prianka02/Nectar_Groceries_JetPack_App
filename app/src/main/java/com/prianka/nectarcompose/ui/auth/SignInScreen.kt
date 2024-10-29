@@ -36,10 +36,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.prianka.nectarcompose.R
+import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 @Composable
 fun SignInScreen(navController: NavController){
@@ -54,9 +57,9 @@ fun SignInScreen(navController: NavController){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            val topbarImage = painterResource(id = R.drawable.groceries)
+            val topBarImage = painterResource(id = R.drawable.groceries)
             Image(
-                painter = topbarImage,
+                painter = topBarImage,
                 contentDescription = "top bar image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -95,7 +98,7 @@ fun SignInScreen(navController: NavController){
                     )
                     Spacer(modifier = Modifier.width(8.dp))
 
-// After focusing this basic text field, it will render me to the another screen
+                   // After focusing this basic text field, it will render me to the another screen
                     BasicTextField(
                         value = text,
                         onValueChange = { newText -> text = newText },
@@ -119,19 +122,15 @@ fun SignInScreen(navController: NavController){
                         .padding(start = 20.dp, top = 10.dp, end = 20.dp)
                 )
 
+                Spacer(modifier = Modifier.height(30.dp))
+
               //    Social media authentication design
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ){
-                    Image(
-                        painter = painterResource(id = R.drawable.bottomblurbackground),
-                        contentDescription = "Bottom Blur image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
+
                     // Social Media Buttons
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -160,8 +159,18 @@ fun SignInScreen(navController: NavController){
                     }
                 }
             }
+
+            Image(
+                painter = painterResource(id = R.drawable.bottomblurbackground),
+                contentDescription = "Bottom Blur image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
         }
 }
+
+
 // Social Media Buttons handling
 @Composable
 fun SocialMediaButton(text: String, backgroundColor: Color, icon: Int) {
@@ -170,11 +179,10 @@ fun SocialMediaButton(text: String, backgroundColor: Color, icon: Int) {
         colors = ButtonDefaults.buttonColors(backgroundColor),
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .height(67.dp),
+            .height(65.dp),
         shape = RoundedCornerShape(19.dp)
 
     ) {
-
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = null
@@ -196,10 +204,10 @@ fun SocialMediaButton(text: String, backgroundColor: Color, icon: Int) {
     }
 }
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun SignInPreview() {
-//    NectarComposeTheme {
-//        SignInScreen(navController = rememberNavController())
-//    }
-//}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun SignInPreview() {
+    NectarComposeTheme {
+        SignInScreen(navController = rememberNavController())
+    }
+}

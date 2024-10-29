@@ -60,7 +60,7 @@ fun GetOTPView(){
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(.3f)
+            .fillMaxHeight(.375f)
             .padding(start = 20.dp, end = 20.dp)
     ) {
 

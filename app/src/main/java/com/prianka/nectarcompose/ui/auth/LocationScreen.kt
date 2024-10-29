@@ -22,17 +22,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.components.AuthTopBackground
 import com.prianka.nectarcompose.ui.components.BottomBackgroundDesign
 import com.prianka.nectarcompose.ui.components.LocationDropDown
 import com.prianka.nectarcompose.ui.components.NectarDesignerButton
+import com.prianka.nectarcompose.ui.home.HomeActivity
 
 @Composable
-fun LocationScreen() {
+fun LocationScreen(navController: NavController) {
     val context = LocalContext.current // Get the current context
 
     Column(
@@ -44,7 +45,7 @@ fun LocationScreen() {
             modifier = Modifier.fillMaxWidth()
         ) {
             // Top Background Component
-            AuthTopBackground()
+            AuthTopBackground(navController)
 
             // Content in the middle
             Box(
@@ -130,7 +131,7 @@ fun LocationScreen() {
                 NectarDesignerButton(
                     text = "Submit",
                     onClick = {
-                        val intent = Intent(context, LoginActivity::class.java)
+                        val intent = Intent(context, HomeActivity::class.java)
                         context.startActivity(intent)
                     }
                 )}

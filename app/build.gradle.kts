@@ -78,6 +78,6 @@ dependencies {
 //    for hiding system bars
     implementation (libs.accompanist.systemuicontroller)
     implementation(libs.androidx.navigation.compose)
-
-
+    implementation (libs.coil.compose)
+    implementation (libs.accompanist.coil)
 }

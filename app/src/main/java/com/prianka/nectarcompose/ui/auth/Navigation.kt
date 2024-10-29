@@ -23,7 +23,7 @@ fun Navigation(){
             OTPVerificationScreen(navController)
         }
         composable(route = Screen.LocationScreen.route){
-            LocationScreen()
+            LocationScreen(navController)
         }
     }
 }

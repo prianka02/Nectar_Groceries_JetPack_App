@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -61,10 +63,10 @@ import com.prianka.nectarcompose.ui.components.GetPasswordView
 import com.prianka.nectarcompose.ui.components.HorizontalDividerComponent
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SignUpScreen(navController: NavHostController){
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current    // Initialize FocusManager for managing focus and keyboard dismissal
 
 //    UserInputs Managements
     var userNameText by remember { mutableStateOf(TextFieldValue("")) }
@@ -72,13 +74,16 @@ fun SignUpScreen(navController: NavHostController){
     var userPasswordText by remember { mutableStateOf(TextFieldValue("")) }
 
 
-//    To adjust the layout when the keyboard appears
-    val bringIntoViewRequester = remember { BringIntoViewRequester() }
-    val coroutineScope = rememberCoroutineScope()
-
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .pointerInput(Unit) {
+
+                // Clear focus when the screen is touched without showing visual effects
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
     ) {
         // Top Background image
         Image(
@@ -127,11 +132,12 @@ fun SignUpScreen(navController: NavHostController){
                 color = colorResource(id = R.color.nectar_gray_text_color)
             )
             Spacer(modifier = Modifier.height(15.dp))
-            GetUserView(
-                userText = userNameText, // Pass the current text to TopBackgroundImageSet
-                onTextChanged = { newText ->
-                    userNameText = newText // Update the state with the new text
 
+            //  Composable function for getting Username view
+            GetUserView(
+                userText = userNameText,
+                onTextChanged = { newText ->
+                    userNameText = newText
                 }
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -145,10 +151,12 @@ fun SignUpScreen(navController: NavHostController){
                 color = colorResource(id = R.color.nectar_gray_text_color)
             )
             Spacer(modifier = Modifier.height(15.dp))
+
+            //  Composable function for getting Email view
             GetSignUpEmailView(
-                emailText = userEmailText, // Pass the current text to TopBackgroundImageSet
+                emailText = userEmailText,
                 onTextChanged = { newText ->
-                    userEmailText = newText // Update the state with the new text
+                    userEmailText = newText
 
                 }
             )
@@ -162,10 +170,12 @@ fun SignUpScreen(navController: NavHostController){
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.nectar_gray_text_color)
             )
+
+            //  Composable function for getting Password view
             GetPasswordView(
-                passwordText = userPasswordText, // Pass the current text to TopBackgroundImageSet
+                passwordText = userPasswordText,
                 onTextChanged = { newText ->
-                    userPasswordText = newText // Update the state with the new text
+                    userPasswordText = newText
 
                 }
             )
@@ -178,6 +188,7 @@ fun SignUpScreen(navController: NavHostController){
                 verticalArrangement = Arrangement.Center
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
+
 //                Annotated string
                 TermsAndPolicyText(
                     onTermsClicked = {
@@ -198,7 +209,7 @@ fun SignUpScreen(navController: NavHostController){
                             userNameText.text.isEmpty() && userEmailText.text.isEmpty() && userPasswordText.text.isEmpty() -> {
                                 Toast.makeText(
                                     context,
-                                    "Please enter a valid email and password",
+                                    "Please enter a valid user name, email and password",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

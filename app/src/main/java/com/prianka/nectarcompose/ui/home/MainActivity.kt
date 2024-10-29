@@ -30,6 +30,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -108,12 +110,12 @@ fun SplashScreen(navController: NavController){
 // This is the OnBoardingScreen Composable function
 @Composable
 fun OnBoardingScreen() {
-    val context = LocalContext.current // Get the current context
+    val context = LocalContext.current      // Get the current context
 
-    // Create a launcher for starting the activity
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ){}
+//    // Create a launcher for starting the activity
+//    val launcher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.StartActivityForResult()
+//    ){}
 
     Surface(
           modifier = Modifier.fillMaxSize()
@@ -151,14 +153,16 @@ fun OnBoardingScreen() {
                       textAlign = TextAlign.Center,
                       fontWeight = FontWeight.SemiBold,
                       fontStyle = FontStyle.Normal,
+//                      fontFamily = FontFamily(Font(R.font.gilroy_regular)),
                       lineHeight = 52.sp,
                       modifier = Modifier
                           .padding(5.dp)
                   )
                   Text(
-                      text = "Ger your groceries in as fast as one hour",
+                      text = "Get your groceries in as fast as one hour",
                       color = Color.White,
                       fontSize = 14.sp,
+//                      fontFamily = FontFamily(Font(R.font.gilroy_medium)),
                       textAlign = TextAlign.Center,
                       modifier = Modifier
                           .padding(bottom = 30.dp)
@@ -168,7 +172,8 @@ fun OnBoardingScreen() {
                       text = "Get Started",
                       onClick = {
                           val intent = Intent(context, VerificationActivity::class.java)
-                          launcher.launch(intent)
+                          context.startActivity(intent)
+//                          launcher.launch(intent)
                           (context as? Activity)?.finish()
                       }
                   )

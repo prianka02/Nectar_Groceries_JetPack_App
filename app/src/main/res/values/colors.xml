@@ -13,4 +13,5 @@
     <color name="google_btn_background_color">#5383EC</color>
     <color name="fb_btn_background_color">#4A66AC</color>
     <color name="OTP_field_underscore_color">#181725</color>
+    <color name="Search_Bar_color">#F2F3F2</color>
 </resources>

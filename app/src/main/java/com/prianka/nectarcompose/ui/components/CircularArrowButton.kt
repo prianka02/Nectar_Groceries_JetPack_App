@@ -18,16 +18,16 @@ import com.prianka.nectarcompose.R // Adjust according to your package structure
 fun CircularArrowButton(onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(56.dp) // Set size for the circular button
-            .clip(CircleShape) // Clip the box to make it circular
-            .clickable { onClick() } // Handle click events
-            .background(Color.Transparent) // Optional: background color
+            .size(56.dp)
+            .clip(CircleShape)    // Clip the box to make it circular
+            .clickable { onClick() }
+            .background(Color.Transparent)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.floatingnext), // Replace with your image resource name
+            painter = painterResource(id = R.drawable.floatingnext),
             contentDescription = "Arrow Image",
             modifier = Modifier
-                .size(56.dp) // Same size as the box
+                .size(56.dp)
         )
     }
 }

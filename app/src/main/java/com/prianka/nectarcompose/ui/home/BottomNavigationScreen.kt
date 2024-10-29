@@ -3,9 +3,12 @@ package com.prianka.nectarcompose.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,9 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prianka.nectarcompose.R
@@ -43,39 +49,52 @@ fun BottomNavigationScreen(modifier: Modifier = Modifier){
         mutableIntStateOf(0)
     }
 
-    Scaffold(modifier = Modifier.fillMaxSize(),
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar(
-                modifier = Modifier
-                    .padding(top = 20.dp, bottom = 20.dp)
-                    .height(92.dp) // Custom height
-                    .clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)) // Rounded top corners
-                    .background(Color.White)
-            ) {
-                bottomNavItemList.forEachIndexed { index, bottomNavItems ->
-                    NavigationBarItem(
-                        selected = selectedIndex == index,
-                        onClick = { selectedIndex = index },
-                        label = {
-                            Text(
-                                text = bottomNavItems.label
+            Column {
+                Spacer(modifier = Modifier.height(10.dp))
+                NavigationBar(
+                    containerColor = Color.White,
+                    modifier = Modifier
+                        .height(120.dp)
+                        .clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp))
+                        .shadow(elevation = 8.dp, shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)), tonalElevation = 0.dp
+                ) {
+                    bottomNavItemList.forEachIndexed { index, bottomNavItems ->
+                        
+                        NavigationBarItem(
+                            selected = selectedIndex == index,
+                            onClick = { selectedIndex = index },
+                            label = {
+                                Text(
+                                    text = bottomNavItems.label,
+                                    style = TextStyle(
+                                        color = if (selectedIndex == index)
+                                            colorResource(id = R.color.nectar_primary_color) // Selected text color (green in your case)
+                                        else
+                                            colorResource(id = R.color.OTP_field_underscore_color) // Unselected text color
+                                    )
+                                )
+                            },
+                            icon = {
+                                Image(
+                                    painter = bottomNavItems.icon,
+                                    contentDescription = bottomNavItems.label,
+                                    modifier = Modifier.size(24.dp), // Set a fixed size for icons
+                                    colorFilter = ColorFilter.tint(
+                                        if (selectedIndex == index)
+                                            colorResource(id = R.color.nectar_primary_color) // Selected icon color (green)
+                                        else
+                                            colorResource(id = R.color.OTP_field_underscore_color) // Unselected icon color (gray)
+                                    )
+                                )
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = Color.Transparent // Remove the oval background around the selected item
                             )
-                                },
-                        icon = {
-                            Image(
-                                painter = bottomNavItems.icon,
-                                contentDescription = bottomNavItems.label
-                            )
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = colorResource(id = R.color.nectar_primary_color),
-                            unselectedIconColor = colorResource(id = R.color.OTP_field_underscore_color),
-                            selectedTextColor = colorResource(id = R.color.nectar_primary_color),
-                            unselectedTextColor = colorResource(id = R.color.OTP_field_underscore_color),
-                            indicatorColor = Color.Transparent // Remove oval selection background
-
                         )
-                    )
+                    }
                 }
             }
         }

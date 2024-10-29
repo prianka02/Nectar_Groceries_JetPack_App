@@ -9,8 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.prianka.nectarcompose.R
 
 @Composable
 fun NectarDesignerButton(
@@ -27,6 +30,11 @@ fun NectarDesignerButton(
             .fillMaxWidth(0.9f) // Make the button 80% of the width
             .height(65.dp)
     ) {
-        Text(text = text, color = Color.White, fontSize = 16.sp)
+        Text(
+            text = text,
+            color = Color.White,
+            fontSize = 16.sp,
+//            fontFamily = FontFamily(Font(R.font.gilroy_regular))
+        )
     }
 }

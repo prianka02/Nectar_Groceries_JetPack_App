@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,8 +31,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,6 +55,7 @@ import com.prianka.nectarcompose.ui.home.HomeActivity
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 class LoginActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -69,6 +73,8 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun SetLoginActivity(navController: NavHostController){
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current    // Initialize FocusManager for managing focus and keyboard dismissal
+
 
     var userEmailText by remember { mutableStateOf(TextFieldValue("")) } // Manage the text state
     var userPasswordText by remember { mutableStateOf(TextFieldValue("")) } // Manage the text state
@@ -76,6 +82,13 @@ fun SetLoginActivity(navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .pointerInput(Unit) {
+
+                // Clear focus when the screen is touched without showing visual effects
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
     ) {
         // Background image
         Image(

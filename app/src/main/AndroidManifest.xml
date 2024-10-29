@@ -32,7 +32,6 @@
         <activity
             android:name=".ui.home.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.NectarCompose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

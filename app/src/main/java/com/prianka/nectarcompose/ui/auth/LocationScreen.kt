@@ -1,6 +1,8 @@
 package com.prianka.nectarcompose.ui.auth
 
+import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.components.AuthTopBackground
@@ -31,10 +34,12 @@ import com.prianka.nectarcompose.ui.components.BottomBackgroundDesign
 import com.prianka.nectarcompose.ui.components.LocationDropDown
 import com.prianka.nectarcompose.ui.components.NectarDesignerButton
 import com.prianka.nectarcompose.ui.home.HomeActivity
+import com.prianka.nectarcompose.ui.viewmodels.SharedLocationViewModel
 
 @Composable
 fun LocationScreen(navController: NavController) {
-    val context = LocalContext.current // Get the current context
+    val sharedLocationViewModel: SharedLocationViewModel = viewModel()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -44,8 +49,7 @@ fun LocationScreen(navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Top Background Component
-            AuthTopBackground(navController)
+            AuthTopBackground(navController)       // Top Background Component
 
             // Content in the middle
             Box(
@@ -57,7 +61,7 @@ fun LocationScreen(navController: NavController) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.BottomCenter), // Align the content in the bottom half
+                        .align(Alignment.BottomCenter),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
@@ -97,11 +101,12 @@ fun LocationScreen(navController: NavController) {
             BottomBackgroundDesign()
 
 //          Location Selection Dropdown Components
-            val zoneList = listOf("Types of your Zone", "Banasree", "Banani", "Gulshan", "Dhanmondi", "Mirpur", "Uttara", "Mohammadpur")
-            val zoneCurrentValue = remember { mutableStateOf(zoneList[0]) }
+            val zoneList = listOf("Banasree", "Banani", "Gulshan", "Dhanmondi", "Mirpur", "Uttara", "Mohammadpur")
+            val zoneCurrentValue = remember { mutableStateOf("Types of your Area") }
 
-            val areaList = listOf("Types of your area", "Block A", "Block B", "Block C", "Block D", "Block E", "Block F", "Block G")
-            val areaCurrentValue = remember { mutableStateOf(areaList[0]) }
+            val areaList = listOf("Block A", "Block B", "Block C", "Block D", "Block E", "Block F", "Block G")
+            val areaCurrentValue = remember { mutableStateOf("Types of your Zone") }
+
 
             Column(
                 modifier = Modifier
@@ -115,8 +120,10 @@ fun LocationScreen(navController: NavController) {
                     itemList = zoneList,
                     selectedItem = zoneCurrentValue
                 )
+
 //              Spacer between two dropdowns
                 Spacer(modifier = Modifier.height(20.dp))
+
                 LocationDropDown(
                     label = "Your Area",
                     itemList = areaList,
@@ -131,8 +138,23 @@ fun LocationScreen(navController: NavController) {
                 NectarDesignerButton(
                     text = "Submit",
                     onClick = {
+                        Log.d("Area", areaCurrentValue.value)
+                        Log.d("Zone", zoneCurrentValue.value)
+
+                        val location = zoneCurrentValue.value
+
+                        // Update ViewModel values
+                        sharedLocationViewModel.updateArea(areaCurrentValue.value)
+                        sharedLocationViewModel.updateZone(location)
+
+                        // Log the updated values from ViewModel
+//                        Log.d("Location", "Zone: ${sharedLocationViewModel.selectedZone.value}, Area: ${sharedLocationViewModel.selectedArea.value}")
+
                         val intent = Intent(context, HomeActivity::class.java)
                         context.startActivity(intent)
+
+                        // Cast context to Activity and finish it
+                        (context as? Activity)?.finish() // Finish the current activity
                     }
                 )}
             }

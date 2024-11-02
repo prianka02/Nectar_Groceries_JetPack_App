@@ -32,6 +32,8 @@ fun LocationDropDown(
     selectedItem: MutableState<String>,
     modifier: Modifier = Modifier
 ) {
+    val isExpanded = remember { mutableStateOf(false) }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.Start,
@@ -44,8 +46,6 @@ fun LocationDropDown(
             textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(10.dp))
-
-        val isExpanded = remember { mutableStateOf(false) }
 
         Row(
             modifier = Modifier

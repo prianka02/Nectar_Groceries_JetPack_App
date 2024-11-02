@@ -237,10 +237,10 @@ fun SetLoginActivity(navController: NavHostController){
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GreetingPreview() {
-    NectarComposeTheme {
-       SetLoginActivity(navController = rememberNavController())
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun GreetingPreview() {
+//    NectarComposeTheme {
+//       SetLoginActivity(navController = rememberNavController())
+//    }
+//}

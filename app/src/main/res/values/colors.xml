@@ -14,4 +14,8 @@
     <color name="fb_btn_background_color">#4A66AC</color>
     <color name="OTP_field_underscore_color">#181725</color>
     <color name="Search_Bar_color">#F2F3F2</color>
+    <color name="card_gray_text_color">#7C7C7C</color>
+    <color name="card_black_text_color">#181725</color>
+    <color name="quantity_border_color">#E2E2E2</color>
+    <color name="un_checked_box_color">#B1B1B1</color>
 </resources>

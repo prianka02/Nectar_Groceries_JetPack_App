@@ -391,11 +391,11 @@ fun TermsAndPolicyText(onTermsClicked: () -> Unit, onPrivacyClicked: () -> Unit)
 
 
 
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun SignUpScreenPreview() {
-    NectarComposeTheme {
-        SignUpScreen(navController = rememberNavController())
-    }
-}
+//
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun SignUpScreenPreview() {
+//    NectarComposeTheme {
+//        SignUpScreen(navController = rememberNavController())
+//    }
+//}

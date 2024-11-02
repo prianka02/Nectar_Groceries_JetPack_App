@@ -58,14 +58,26 @@ fun SignInScreen(navController: NavController){
         ) {
 
             val topBarImage = painterResource(id = R.drawable.groceries)
-            Image(
-                painter = topBarImage,
-                contentDescription = "top bar image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(374.15.dp)
-            )
+            val shoppingBagLogo = painterResource(id = R.drawable.shopping_bag_logo)
+            Box(){
+                Image(
+                    painter = topBarImage,
+                    contentDescription = "top bar image",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(374.15.dp)
+                )
+                Image(
+                    painter = shoppingBagLogo,
+                    contentDescription = "top bar logo image",
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(top = 20.dp, end = 55.dp)
+
+                )
+            }
+
 
 //            Designing after top view image
             Column(
@@ -204,10 +216,10 @@ fun SocialMediaButton(text: String, backgroundColor: Color, icon: Int) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun SignInPreview() {
-    NectarComposeTheme {
-        SignInScreen(navController = rememberNavController())
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun SignInPreview() {
+//    NectarComposeTheme {
+//        SignInScreen(navController = rememberNavController())
+//    }
+//}

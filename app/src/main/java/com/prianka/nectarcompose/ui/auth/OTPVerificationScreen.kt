@@ -76,11 +76,11 @@ fun OTPVerificationScreen(navController: NavHostController) {
         }
     }
 }
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun OTPVerificationScreenPreview() {
-    NectarComposeTheme {
-        OTPVerificationScreen(navController = rememberNavController())
-    }
-}
+//
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun OTPVerificationScreenPreview() {
+//    NectarComposeTheme {
+//        OTPVerificationScreen(navController = rememberNavController())
+//    }
+//}

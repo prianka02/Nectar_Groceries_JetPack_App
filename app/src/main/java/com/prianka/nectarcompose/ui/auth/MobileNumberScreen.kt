@@ -111,12 +111,12 @@ fun MobileNumberScreen(navController: NavController) {
     }
 }
 
-
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun MobileNumberScreenPreview() {
-    NectarComposeTheme {
-        MobileNumberScreen(navController = rememberNavController())
-    }
-}
+//
+//
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun MobileNumberScreenPreview() {
+//    NectarComposeTheme {
+//        MobileNumberScreen(navController = rememberNavController())
+//    }
+//}

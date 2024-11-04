@@ -34,7 +34,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.prianka.nectarcompose.R
-import com.prianka.nectarcompose.ui.auth.VerificationActivity
 import com.prianka.nectarcompose.ui.components.DetailsPageSlider
 import com.prianka.nectarcompose.ui.components.HorizontalDividerComponent
 import com.prianka.nectarcompose.ui.components.NectarDesignerButton

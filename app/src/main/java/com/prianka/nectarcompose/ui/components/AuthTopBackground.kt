@@ -9,13 +9,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.prianka.nectarcompose.R
 
 @Composable
-fun AuthTopBackground(navController: NavController) {
+fun AuthTopBackground(navController: NavController, keyboardController: SoftwareKeyboardController?) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +33,7 @@ fun AuthTopBackground(navController: NavController) {
         // Icon image
         IconButton(
             onClick = {
-                // Handle the back button action here
+                keyboardController?.hide()  // Hide the keyboard
                 navController.navigateUp()
             },
             modifier = Modifier

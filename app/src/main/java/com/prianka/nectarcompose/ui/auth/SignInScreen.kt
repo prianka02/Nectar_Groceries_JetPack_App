@@ -1,6 +1,8 @@
 package com.prianka.nectarcompose.ui.auth
 
+import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +32,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -46,6 +49,7 @@ import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 @Composable
 fun SignInScreen(navController: NavController){
+    val context = LocalContext.current
     var text by remember { mutableStateOf(TextFieldValue("+880")) }
     val focusRequester = remember { FocusRequester() }
     var isFocused by remember { mutableStateOf(false) }
@@ -148,26 +152,50 @@ fun SignInScreen(navController: NavController){
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(text = "Or connect with social media",
+                        Text(text = "Or",
                             color = colorResource(id = R.color.nectar_gray_text_color)
 
                             )
 
-                        Spacer(modifier = Modifier.height(30.dp))
-
-                        SocialMediaButton(
-                            text = "Continue with Google",
-                            backgroundColor = colorResource(id = R.color.google_btn_background_color), // Google blue color
-                            icon = R.drawable.google // replace with a Google icon
-                        )
-
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        SocialMediaButton(
-                            text = "Continue with Facebook",
-                            backgroundColor = colorResource(id = R.color.fb_btn_background_color), // Facebook blue color
-                            icon = R.drawable.facebook // replace with a Facebook icon
+                        LoginComponentButton(
+                            text = "Sign In",
+                            backgroundColor = colorResource(id = R.color.nectar_primary_color), // Google blue color
+                            icon = R.drawable.google,
+                            onClick = {
+                                navController.navigate(Screen.EmailLoginScreen.route)
+                            }
                         )
+//
+//                        Spacer(modifier = Modifier.height(20.dp))
+//
+//                        LoginComponentButton(
+//                            text = "Continue with Email",
+//                            backgroundColor = colorResource(id = R.color.fb_btn_background_color), // Facebook blue color
+//                            icon = R.drawable.email,
+//                            onClick = {
+//                                navController.navigate(Screen.EmailLoginScreen.route)
+//                            }
+//                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Row {
+                            Text(
+                                text = "Don’t have an account? ",
+                                fontSize = 13.sp,
+                                color = colorResource(id = R.color.nectar_gray_text_color)
+                            )
+                            Text(
+                                text = "Signup",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+//                                color = colorResource(id = R.color.fb_btn_background_color),
+                                modifier = Modifier.clickable{
+                                    navController.navigate(Screen.SignUpScreen.route)
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -183,11 +211,12 @@ fun SignInScreen(navController: NavController){
 }
 
 
-// Social Media Buttons handling
+// Login Buttons handling
 @Composable
-fun SocialMediaButton(text: String, backgroundColor: Color, icon: Int) {
+fun LoginComponentButton(text: String, backgroundColor: Color, icon: Int,     onClick: () -> Unit
+) {
     Button(
-        onClick = { /* Handle click */ },
+        onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(backgroundColor),
         modifier = Modifier
             .fillMaxWidth(0.9f)
@@ -195,11 +224,11 @@ fun SocialMediaButton(text: String, backgroundColor: Color, icon: Int) {
         shape = RoundedCornerShape(19.dp)
 
     ) {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = null
-             )
-//            Spacer(modifier = Modifier.width(20.dp))
+//            Icon(
+//                painter = painterResource(id = icon),
+//                contentDescription = null
+//             )
+////            Spacer(modifier = Modifier.width(20.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,

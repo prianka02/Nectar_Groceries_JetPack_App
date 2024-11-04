@@ -1,15 +1,12 @@
 package com.prianka.nectarcompose.ui.auth
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 @Composable
-fun Navigation(){
-
+fun VerificationNavHost() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.SignInScreen.route) {
@@ -25,12 +22,19 @@ fun Navigation(){
         composable(route = Screen.LocationScreen.route){
             LocationScreen(navController)
         }
+        composable(route = Screen.EmailLoginScreen.route){
+            EmailLoginScreen(navController)
+        }
+        composable(route = Screen.SignUpScreen.route){
+            SignUpScreen(navController)
+        }
+
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun NavigationPreview() {
-    NectarComposeTheme {
-     }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun NavigationPreview() {
+//    NectarComposeTheme {
+//     }
+//}

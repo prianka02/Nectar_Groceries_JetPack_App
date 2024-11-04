@@ -28,6 +28,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.prianka.nectarcompose.R
@@ -76,6 +77,7 @@ fun ExclusiveProductCard(
             // Product Name
             Text(
                 text = productName,
+                maxLines = 1,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.card_black_text_color)

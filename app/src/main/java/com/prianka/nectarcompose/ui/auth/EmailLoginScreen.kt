@@ -1,12 +1,9 @@
 package com.prianka.nectarcompose.ui.auth
 
+import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -18,8 +15,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -40,39 +40,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.components.GetEmailView
 import com.prianka.nectarcompose.ui.components.GetPasswordView
 import com.prianka.nectarcompose.ui.components.HorizontalDividerComponent
 import com.prianka.nectarcompose.ui.home.HomeActivity
-import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
-class LoginActivity : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            NectarComposeTheme {
-                val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "login") {
-                    composable("login") { SetLoginActivity(navController) }
-                    composable("signup") { SignUpScreen(navController) } // Your SignUpScreen
-                }
-            }
-        }
-    }
-}
 @Composable
-fun SetLoginActivity(navController: NavHostController){
+fun EmailLoginScreen(navController: NavHostController){
     val context = LocalContext.current
+    val activity = (context as? Activity)   // This casts the context to an Activity
+
     val focusManager = LocalFocusManager.current    // Initialize FocusManager for managing focus and keyboard dismissal
 
 
@@ -89,6 +70,8 @@ fun SetLoginActivity(navController: NavHostController){
                     focusManager.clearFocus()
                 })
             }
+            .imePadding()  // Adjusts for keyboard opening
+
     ) {
         // Background image
         Image(
@@ -110,6 +93,7 @@ fun SetLoginActivity(navController: NavHostController){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())  // Make Column scrollable
                 .padding(start = 24.dp, end = 24.dp, top = 120.dp)
                 .align(Alignment.Center)
         ) {
@@ -192,11 +176,12 @@ fun SetLoginActivity(navController: NavHostController){
                                 Toast.makeText(context, "Email is invalid.", Toast.LENGTH_SHORT).show()
                             }
                             userPasswordText.text.length < 8 -> {
-                                Toast.makeText(context, "User Password is too short", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Password is too short, Must be 8 characters", Toast.LENGTH_SHORT).show()
                             }
                             else -> {
                                 val intent = Intent(context, HomeActivity::class.java)
                                 context.startActivity(intent)
+                                activity?.finish()
                             }
                         }
 
@@ -228,7 +213,7 @@ fun SetLoginActivity(navController: NavHostController){
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.nectar_primary_color),
                         modifier = Modifier.clickable{
-                            navController.navigate("signup")
+                            navController.navigate(Screen.SignUpScreen.route)
                         }
                     )
                 }
@@ -236,11 +221,3 @@ fun SetLoginActivity(navController: NavHostController){
         }
     }
 }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun GreetingPreview() {
-//    NectarComposeTheme {
-//       SetLoginActivity(navController = rememberNavController())
-//    }
-//}

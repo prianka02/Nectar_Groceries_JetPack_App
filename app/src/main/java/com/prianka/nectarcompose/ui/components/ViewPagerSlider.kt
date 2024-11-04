@@ -47,7 +47,7 @@ fun ViewPagerSlider(){
 
         HorizontalPager(state = pagerState,
             modifier = Modifier
-                .height(114.dp)
+                .height(130.dp)
                 .background(Color.Transparent)
                 .clip(RoundedCornerShape(10.dp)),
             itemSpacing = 1.dp
@@ -96,9 +96,6 @@ fun ViewPagerSlider(){
                 }
             }
         }
-
-
-
     }
 
 

@@ -15,14 +15,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -84,6 +87,7 @@ fun SignUpScreen(navController: NavHostController){
                     focusManager.clearFocus()
                 })
             }
+            .imePadding()
     ) {
         // Top Background image
         Image(
@@ -106,6 +110,7 @@ fun SignUpScreen(navController: NavHostController){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(start = 24.dp, end = 24.dp, top = 220.dp)
                 .align(Alignment.Center)
         ) {
@@ -220,8 +225,7 @@ fun SignUpScreen(navController: NavHostController){
                                 Toast.makeText(context, "User Password is too short", Toast.LENGTH_SHORT).show()
                             }
                             else -> {
-                                val intent = Intent(context, LoginActivity::class.java)
-                                context.startActivity(intent)
+                                navController.navigate(Screen.LocationScreen.route)
                             }
                         }
 
@@ -252,7 +256,7 @@ fun SignUpScreen(navController: NavHostController){
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.nectar_primary_color),
                         modifier = Modifier.clickable{
-                            navController.navigate("login")
+                            navController.navigate(Screen.EmailLoginScreen.route)
                         }
                     )
                 }

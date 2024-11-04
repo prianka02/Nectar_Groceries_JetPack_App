@@ -42,6 +42,7 @@ import androidx.navigation.compose.rememberNavController
 import com.prianka.nectarcompose.R
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalFocusManager
+import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 
 @Composable
@@ -130,10 +131,8 @@ fun GetOTPView(){
                                     .height(2.dp)
                                     .background(colorResource(id = R.color.OTP_field_underscore_color))
                             )
-
                         }
                     }
-
                 }
             }
 

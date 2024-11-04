@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,8 +55,7 @@ fun ShopMainScreen(modifier: Modifier = Modifier,
 
 
     Column(
-        modifier = modifier.fillMaxSize()
-            .verticalScroll(scrollState),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(modifier = Modifier.padding(top = 20.dp),
@@ -82,80 +82,88 @@ fun ShopMainScreen(modifier: Modifier = Modifier,
 
 //            searchResult = "You searched for: $query"
         }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ViewPagerSlider()     // Image Slider Composable
-
-        Spacer(modifier = Modifier.height(35.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(.9f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween
+        Spacer(modifier = Modifier.height(2.dp))
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Exclusive Offer",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-            )
+            Spacer(modifier = Modifier.height(15.dp))
 
-            Text(
-                text = "See all",
-                fontSize = 14.sp,
-                color = colorResource(id = R.color.nectar_primary_color),
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        ExclusiveProductList(shopNavController)
+            ViewPagerSlider()     // Image Slider Composable
+
+            Spacer(modifier = Modifier.height(35.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(.9f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                Text(
+                    text = "Exclusive Offer",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+
+                Text(
+                    text = "See all",
+                    fontSize = 14.sp,
+                    color = colorResource(id = R.color.nectar_primary_color),
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            ExclusiveProductList(shopNavController)
 
 //        Best Selling component part
-        Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(.9f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween
-        ) {
-            Text(
-                text = "Best Selling",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(.9f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                Text(
+                    text = "Best Selling",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                )
 
-            Text(
-                text = "See all",
-                fontSize = 14.sp,
-                color = colorResource(id = R.color.nectar_primary_color),
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        ExclusiveProductList(shopNavController)
+                Text(
+                    text = "See all",
+                    fontSize = 14.sp,
+                    color = colorResource(id = R.color.nectar_primary_color),
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            ExclusiveProductList(shopNavController)
 
 //        Groceries Product list component
-        Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(.9f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween
-        ) {
-            Text(
-                text = "Groceries",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(.9f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                Text(
+                    text = "Groceries",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                )
 
-            Text(
-                text = "See all",
-                fontSize = 14.sp,
-                color = colorResource(id = R.color.nectar_primary_color),
-                fontWeight = FontWeight.Bold,
-            )
-        }
+                Text(
+                    text = "See all",
+                    fontSize = 14.sp,
+                    color = colorResource(id = R.color.nectar_primary_color),
+                    fontWeight = FontWeight.Bold,
+                )
+            }
 
 //       Groceries Random Background Colored Row
-        GroceriesRandomColoredComp(shopNavController)
-        ExclusiveProductList(shopNavController)
+            GroceriesRandomColoredComp(shopNavController)
+            ExclusiveProductList(shopNavController)
+        }
+
 
     }
 }

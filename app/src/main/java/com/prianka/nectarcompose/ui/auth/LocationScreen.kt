@@ -1,7 +1,5 @@
 package com.prianka.nectarcompose.ui.auth
 
-import android.app.Activity
-import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,13 +31,12 @@ import com.prianka.nectarcompose.ui.components.AuthTopBackground
 import com.prianka.nectarcompose.ui.components.BottomBackgroundDesign
 import com.prianka.nectarcompose.ui.components.LocationDropDown
 import com.prianka.nectarcompose.ui.components.NectarDesignerButton
-import com.prianka.nectarcompose.ui.home.HomeActivity
 import com.prianka.nectarcompose.ui.viewmodels.SharedLocationViewModel
 
 @Composable
 fun LocationScreen(navController: NavController) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     val sharedLocationViewModel: SharedLocationViewModel = viewModel()
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -49,7 +46,7 @@ fun LocationScreen(navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth()
         ) {
-            AuthTopBackground(navController)       // Top Background Component
+            AuthTopBackground(navController, keyboardController)       // Top Background Component
 
             // Content in the middle
             Box(
@@ -150,11 +147,7 @@ fun LocationScreen(navController: NavController) {
                         // Log the updated values from ViewModel
 //                        Log.d("Location", "Zone: ${sharedLocationViewModel.selectedZone.value}, Area: ${sharedLocationViewModel.selectedArea.value}")
 
-                        val intent = Intent(context, HomeActivity::class.java)
-                        context.startActivity(intent)
-
-                        // Cast context to Activity and finish it
-                        (context as? Activity)?.finish() // Finish the current activity
+                        navController.navigate(Screen.EmailLoginScreen.route)
                     }
                 )}
             }

@@ -1,6 +1,5 @@
 package com.prianka.nectarcompose.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,13 +30,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.prianka.nectarcompose.R
-import com.prianka.nectarcompose.ui.auth.VerificationActivity
+import com.prianka.nectarcompose.datastore.DatastoreManager
+import com.prianka.nectarcompose.ui.auth.Screen
+import com.prianka.nectarcompose.ui.auth.VerificationNavHost
 import com.prianka.nectarcompose.ui.components.NectarDesignerButton
+import com.prianka.nectarcompose.ui.home.HomeActivity
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,16 +58,19 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//this is the SplashNavigation Composable function that sets up the navigation graph for the splash screen
+// this is the SplashNavigation Composable function that sets up the navigation graph for the splash screen
 @Composable
 fun MainNavigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "splash"){
-        composable("splash"){
+    NavHost(navController = navController, startDestination = Screen.SplashScreen.route){
+        composable(Screen.SplashScreen.route){
             SplashScreen(navController)
         }
-        composable("onBoarding"){
-            OnBoardingScreen()
+        composable(Screen.OnBoardingScreen.route){
+            OnBoardingScreen(navController)
+        }
+        composable(Screen.VerificationNavHost.route){
+            VerificationNavHost()
         }
     }
 }
@@ -71,14 +78,29 @@ fun MainNavigation(){
 // SplashScreen Composable function that displays the splash screen
 @Composable
 fun SplashScreen(navController: NavController){
+    val context = LocalContext.current
 
-    // Start a coroutine for the splash delay
-    LaunchedEffect(key1 = true) {
-        // Delay for 2 seconds
-        kotlinx.coroutines.delay(3000)
-        // Navigate to the main screen
-        navController.navigate("onBoarding") {
-            popUpTo("splash") { inclusive = true }
+
+    val datastoreManager = DatastoreManager(context)
+
+    // Collect the mobile number from the datastore
+    val userMobile = datastoreManager.getString("user_mobile", "").collectAsState(initial = null).value
+
+    // Start a coroutine for the splash delay and navigation
+    LaunchedEffect(key1 = userMobile) {
+
+        kotlinx.coroutines.delay(2000)
+
+        if (!userMobile.isNullOrEmpty()) {
+
+            context.startActivity(Intent(context, HomeActivity::class.java))   // Mobile number exists, navigate to HomeActivity
+            (context as? ComponentActivity)?.finish()       // Finish SplashScreen to prevent going back
+        }
+        else {
+            // Mobile number doesn't exist, proceed to OnBoarding
+            navController.navigate("onBoarding") {
+                popUpTo("splash") { inclusive = true }
+            }
         }
     }
     Surface(modifier = Modifier.fillMaxSize(),
@@ -100,7 +122,7 @@ fun SplashScreen(navController: NavController){
 
 // This is the OnBoardingScreen Composable function
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(navController: NavHostController) {
     val context = LocalContext.current      // Get the current context
 
 //    // Create a launcher for starting the activity
@@ -162,10 +184,9 @@ fun OnBoardingScreen() {
                   NectarDesignerButton(
                       text = "Get Started",
                       onClick = {
-                          val intent = Intent(context, VerificationActivity::class.java)
-                          context.startActivity(intent)
+                          navController.navigate(Screen.VerificationNavHost.route)
 //                          launcher.launch(intent)
-                          (context as? Activity)?.finish()
+//                          (context as? Activity)?.finish()
                       }
                   )
               }

@@ -1,11 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+
+
 }
 
 android {
     namespace = "com.prianka.nectarcompose"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.prianka.nectarcompose"
@@ -86,5 +89,9 @@ dependencies {
     // Paging Compose
     implementation ("com.google.accompanist:accompanist-pager:0.13.0")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.13.0")
+
+//    Preferences DataStore
+    implementation(libs.androidx.datastore.preferences)
+
 
 }

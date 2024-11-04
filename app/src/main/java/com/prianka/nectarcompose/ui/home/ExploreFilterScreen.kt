@@ -20,8 +20,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -59,6 +61,7 @@ fun PersistentBottomSheetScaffold(exploreNavController: NavHostController) {
 
 
     val scaffoldState = rememberBottomSheetScaffoldState()
+//    val bottomSheetState by bottomSheetState.collectAsState()
 
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val peekHeight = screenHeight * .85f
@@ -73,6 +76,7 @@ fun PersistentBottomSheetScaffold(exploreNavController: NavHostController) {
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
             sheetPeekHeight = peekHeight,
+            sheetSwipeEnabled = true,
             sheetShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
             sheetContainerColor = colorResource(id = R.color.Search_Bar_color),
             sheetDragHandle = {

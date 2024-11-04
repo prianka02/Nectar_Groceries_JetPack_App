@@ -37,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -172,6 +173,8 @@ fun ExploreDetailsCategoryComp(
                         // Product Name
                         Text(
                             text = grocery.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
                             color = colorResource(id = R.color.card_black_text_color)
@@ -183,8 +186,6 @@ fun ExploreDetailsCategoryComp(
                             color = colorResource(id = R.color.card_gray_text_color),
                             fontSize = 13.sp
                         )
-
-                        Spacer(modifier = Modifier.height(15.dp))
 
                         Row(
                             modifier = Modifier.fillMaxSize(),

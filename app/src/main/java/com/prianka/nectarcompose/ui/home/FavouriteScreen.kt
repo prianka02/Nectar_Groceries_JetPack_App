@@ -44,88 +44,96 @@ import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
 
 @Composable
 fun FavouriteScreen(modifier: Modifier = Modifier){
-    Column(
+    Box(
         modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
     ) {
+        Column(
+            modifier = modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        Spacer(modifier = Modifier.height(25.dp))
-        Text(
-            text = "Favourite",
-            fontWeight = FontWeight.Bold,
-            fontSize = 19.sp
-        )
+            Spacer(modifier = Modifier.height(25.dp))
+            Text(
+                text = "Favourite",
+                fontWeight = FontWeight.Bold,
+                fontSize = 19.sp
+            )
 
-        Spacer(modifier = Modifier.height(25.dp))
-        HorizontalDividerComponent()
-        Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp))
+            HorizontalDividerComponent()
+            Spacer(modifier = Modifier.height(25.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(.9f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(.9f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Image(
-                    modifier = Modifier
-                        .width(90.dp)
-                        .height(74.dp),
-                    painter = painterResource(id = R.drawable.sprite),
-                    contentDescription = ""
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .width(90.dp)
+                            .height(74.dp),
+                        painter = painterResource(id = R.drawable.sprite),
+                        contentDescription = ""
+                    )
 
-                Column(
+                    Column(
+                    ) {
+                        Text(
+                            text = "Sprite Can",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+
+                        Text(
+                            text = "325ml, Price",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colorResource(id = R.color.nectar_gray_text_color)
+                        )
+                    }
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Sprite Can",
+                        text = "$1.50",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )
-
-
-                    Text(
-                        text = "325ml, Price",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colorResource(id = R.color.nectar_gray_text_color)
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.arrow_right),
+                        contentDescription = "bell chicken red"
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(20.dp))
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth(.9f),
+                color = colorResource(id = R.color.quantity_border_color)
+            )
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "$1.50",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.arrow_right),
-                    contentDescription = "bell chicken red"
-                )
+
+            LazyColumn {
+
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth(.9f),
-            color = colorResource(id = R.color.quantity_border_color)
-        )
-
-
 
         Box(
             modifier = Modifier.fillMaxHeight(.9f),
             contentAlignment = Alignment.BottomCenter
-        ){
+        ) {
             FloatingActionButton(
                 modifier = Modifier.fillMaxWidth(.9f)
                     .clip(RoundedCornerShape(19.dp)),
-                onClick =  {},
+                onClick = {},
                 containerColor = colorResource(id = R.color.nectar_primary_color),
                 contentColor = Color.White
             ) {
@@ -136,14 +144,9 @@ fun FavouriteScreen(modifier: Modifier = Modifier){
                 )
             }
         }
-
-
-        LazyColumn {
-
-        }
     }
 }
-//
+
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun CartScreenPreview() {

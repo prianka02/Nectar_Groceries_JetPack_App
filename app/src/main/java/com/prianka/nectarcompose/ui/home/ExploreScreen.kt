@@ -51,8 +51,7 @@ fun ExploreScreen(
     val scrollState = rememberScrollState()
 
     Column(
-        modifier = modifier.fillMaxSize()
-            .verticalScroll(scrollState),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -70,8 +69,16 @@ fun ExploreScreen(
 
 //            searchResult = "You searched for: $query"
         }
+        Spacer(modifier = Modifier.height(2.dp))
 
-         ExploredRandomColoredComp(exploreNavController)
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+            ExploredRandomColoredComp(exploreNavController)
+        }
     }
 }
 

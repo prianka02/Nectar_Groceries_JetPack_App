@@ -24,9 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.data.Grocery
 
@@ -66,14 +69,21 @@ fun GroceriesRandomColoredComp(shopNavController: NavHostController) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        Image(
+                        Box(
                             modifier = Modifier
                                 .height(71.dp)
                                 .width(71.dp),
-                            painter = painterResource(id = grocery.imageRes),
-                            contentDescription = grocery.name,
-                            contentScale = ContentScale.Fit
+                            contentAlignment = Alignment.Center
                         )
+                        {
+                            Image(
+                                modifier = Modifier.fillMaxSize(),
+                                painter = painterResource(id = grocery.imageRes),
+                                contentDescription = grocery.name,
+                                contentScale = ContentScale.Fit
+                            )
+                        }
+
                         Spacer(modifier = Modifier.width(15.dp))
                         Text(
                             fontSize = 19.sp,
@@ -95,3 +105,12 @@ fun generateRandomPastelColor(): Color {
     val lightness = 0.9f                         // High lightness for pastel tones
     return Color.hsl(hue, saturation, lightness)
 }
+
+//@OptIn(ExperimentalPagerApi::class)
+//@Preview(showSystemUi = true, showBackground = true)
+//@Composable
+//fun PreviewSlider(){
+//    GroceriesRandomColoredComp(
+//        shopNavController = rememberNavController()
+//    )
+//}

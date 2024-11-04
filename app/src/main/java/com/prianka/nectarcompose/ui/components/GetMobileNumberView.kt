@@ -39,7 +39,7 @@ import com.prianka.nectarcompose.R
 fun GetMobileNumberView(
     phoneNoText: TextFieldValue, // Accept the text as a parameter
     onTextChanged: (TextFieldValue) -> Unit,
-    maxLength: Int = 14,
+    maxLength: Int = 10,
     focusRequester: FocusRequester
 ) {
     val focusManager = LocalFocusManager.current  // Request for inputText Focusing and Hiding as well as keyboard manager
@@ -78,7 +78,7 @@ fun GetMobileNumberView(
                     .padding(top = 10.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.flag), // replace with your flag icon
+                    painter = painterResource(id = R.drawable.flag),
                     contentDescription = "Bangladesh Flag",
                     modifier = Modifier.size(24.dp)
                 )
@@ -86,6 +86,10 @@ fun GetMobileNumberView(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 // BasicTextField for mobile input
+                Text(
+                    text = "+880",
+                    fontSize = 14.sp
+                )
                 BasicTextField(
                     value = phoneNoText, // Use the passed text value
                     maxLines = 1,

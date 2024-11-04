@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.devtools.ksp)
 
 
 }
@@ -83,12 +85,22 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation (libs.coil.compose)
     implementation (libs.accompanist.coil)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+//    Hilt dependencies
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation (libs.androidx.hilt.navigation.compose)
+
+    //Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
 
     // Image Slider
-    implementation ("io.coil-kt:coil-compose:1.4.0")
     // Paging Compose
-    implementation ("com.google.accompanist:accompanist-pager:0.13.0")
-    implementation ("com.google.accompanist:accompanist-pager-indicators:0.13.0")
+    implementation (libs.accompanist.pager)
+    implementation (libs.accompanist.pager.indicators)
 
 //    Preferences DataStore
     implementation(libs.androidx.datastore.preferences)

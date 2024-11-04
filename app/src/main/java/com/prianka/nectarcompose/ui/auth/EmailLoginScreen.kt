@@ -24,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,23 +43,27 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.prianka.nectarcompose.R
 import com.prianka.nectarcompose.ui.components.GetEmailView
 import com.prianka.nectarcompose.ui.components.GetPasswordView
 import com.prianka.nectarcompose.ui.components.HorizontalDividerComponent
 import com.prianka.nectarcompose.ui.home.HomeActivity
+import com.prianka.nectarcompose.ui.viewmodels.EmailLoginViewModel
 
 @Composable
-fun EmailLoginScreen(navController: NavHostController){
+fun EmailLoginScreen(navController: NavHostController,
+                     viewModel: EmailLoginViewModel = hiltViewModel()
+){
     val context = LocalContext.current
     val activity = (context as? Activity)   // This casts the context to an Activity
 
     val focusManager = LocalFocusManager.current    // Initialize FocusManager for managing focus and keyboard dismissal
 
 
-    var userEmailText by remember { mutableStateOf(TextFieldValue("")) } // Manage the text state
-    var userPasswordText by remember { mutableStateOf(TextFieldValue("")) } // Manage the text state
+    val userEmailText by viewModel.userEmailText.collectAsState()
+    val userPasswordText by viewModel.userPasswordText.collectAsState()
 
     Box(
         modifier = Modifier
@@ -120,11 +125,8 @@ fun EmailLoginScreen(navController: NavHostController){
             )
             Spacer(modifier = Modifier.height(15.dp))
             GetEmailView(
-                emailText = userEmailText, // Pass the current text to TopBackgroundImageSet
-                onTextChanged = { newText ->
-                    userEmailText = newText // Update the state with the new text
-
-                }
+                emailText = userEmailText,
+                onTextChanged = { newText -> viewModel.onEmailChange(newText) }
             )
             Spacer(modifier = Modifier.height(10.dp))
             HorizontalDividerComponent()
@@ -137,11 +139,8 @@ fun EmailLoginScreen(navController: NavHostController){
                 color = colorResource(id = R.color.nectar_gray_text_color)
             )
             GetPasswordView(
-                passwordText = userPasswordText, // Pass the current text to TopBackgroundImageSet
-                onTextChanged = { newText ->
-                    userPasswordText = newText // Update the state with the new text
-
-                }
+                passwordText = userPasswordText,
+                onTextChanged = { newText -> viewModel.onPasswordChange(newText) }
             )
             HorizontalDividerComponent()
 
@@ -164,30 +163,15 @@ fun EmailLoginScreen(navController: NavHostController){
 
                 Button(
                     onClick = {
-                        when {
-                            userEmailText.text.isEmpty() && userPasswordText.text.isEmpty() -> {
-                                Toast.makeText(
-                                    context,
-                                    "Please enter a valid email and password",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            !android.util.Patterns.EMAIL_ADDRESS.matcher(userEmailText.text).matches() -> {
-                                Toast.makeText(context, "Email is invalid.", Toast.LENGTH_SHORT).show()
-                            }
-                            userPasswordText.text.length < 8 -> {
-                                Toast.makeText(context, "Password is too short, Must be 8 characters", Toast.LENGTH_SHORT).show()
-                            }
-                            else -> {
-                                val intent = Intent(context, HomeActivity::class.java)
-                                context.startActivity(intent)
+                        viewModel.login(
+                            onSuccess = {
+                                context.startActivity(Intent(context, HomeActivity::class.java))
                                 activity?.finish()
+                            },
+                            onError = { message ->
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                             }
-                        }
-
-                        Log.d("password", userPasswordText.toString())
-                        Log.d("email", userEmailText.toString())
-
+                        )
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF53B175)

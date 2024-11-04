@@ -42,7 +42,9 @@ import com.prianka.nectarcompose.ui.auth.VerificationNavHost
 import com.prianka.nectarcompose.ui.components.NectarDesignerButton
 import com.prianka.nectarcompose.ui.home.HomeActivity
 import com.prianka.nectarcompose.ui.theme.NectarComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
